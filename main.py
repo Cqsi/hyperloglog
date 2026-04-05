@@ -13,11 +13,9 @@
 
 import mmh3
 from array import array
+import random
 
 b = 14
-h = mmh3.hash64("Casimirasdasdasdadasd", signed=False)[0]
-print("The hash is: ", h)
-print("The binary of the hash is: ", bin(h))
 
 M = array('B', [0] * 2**b) # 2^b unsigned byte registers
 
@@ -27,13 +25,10 @@ M = array('B', [0] * 2**b) # 2^b unsigned byte registers
 # 4. update register
 def add(v: int):
     h = mmh3.hash64(str(v), signed=False)[0]
-    print("hash: ", h)
     
     mask = (1 << b) - 1
     j = h & mask
-    print("j is ", j)
     w = h >> b
-    print("w is ", w)
    
     num = 0
     ne = w.bit_length()
@@ -43,4 +38,5 @@ def add(v: int):
     M[j] = max(M[j], num)
     
 
-print(add(1234232))
+for i in range(10000000):
+    add(random.randint(1, 10000000))
