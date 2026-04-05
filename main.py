@@ -16,8 +16,9 @@ from array import array
 import random
 
 b = 14
+m = 2**b
 
-M = array('B', [0] * 2**b) # 2^b unsigned byte registers
+M = array('B', [0] * m) # 2^b unsigned byte registers
 
 # 1. hash
 # 2. find register index
@@ -30,13 +31,25 @@ def add(v: int):
     j = h & mask
     w = h >> b
    
-    num = 0
+    num = 1
     ne = w.bit_length()
-    while(num < ne and (w >> num) & 1 == 0):
+    while(num < ne and (w >> (ne - num)) & 1 == 0):
         num += 1
     
     M[j] = max(M[j], num)
-    
+
+def count():
+    Z = 0
+    for i in range(m):
+        Z += 2**(-M[i])
+    Z = 1/Z
+    a_m = 0.7213/(1+1.079/m)
+
+    return a_m*m**2*Z
 
 for i in range(10000000):
     add(random.randint(1, 10000000))
+    if i%1000000 == 0:
+        print(i/10000000)
+
+print(count())
