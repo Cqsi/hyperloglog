@@ -1,16 +1,3 @@
-# Your first step is implementing add — the function that takes an object, hashes it, and updates the right register.
-# To do that you need to figure out two things from the hash integer: how to extract the low P bits to get the register index, and how to find the position of the first 1 bit in the remaining upper bits. Both are just integer bit operations. Get those two things working and printing correctly before touching anything else.
-
- # simple example of bit manipulation in python
-    # nb = v.bit_length()
-    # binary = []
-    # for bit in range(nb-1, -1, -1):
-    #     binary.append((v >> bit) & 1);
-    # return binary
-
-# P = number of registers
-# larger P = larger memory, more accuracy
-
 import mmh3
 from array import array
 import random
@@ -32,7 +19,7 @@ def add(v: int):
     w = h >> b
    
     num = 1
-    ne = w.bit_length()
+    ne = 64 - b
     while(num < ne and (w >> (ne - num)) & 1 == 0):
         num += 1
     
@@ -59,4 +46,4 @@ for i in range(length):
 
 
 print("HyperLogLog: ", count())
-print("Actual: ", comp.length)
+print("Actual: ", len(comp))
