@@ -47,9 +47,16 @@ def count():
 
     return a_m*m**2*Z
 
-for i in range(10000000):
-    add(random.randint(1, 10000000))
-    if i%1000000 == 0:
-        print(i/10000000)
+length = 10000000
+comp = set()
 
-print(count())
+for i in range(length):
+    ran = random.randint(1, length)
+    add(ran)
+    comp.add(ran)
+    if i%(int(length/10)) == 0:
+        print(str(i/length*100)+"%")
+
+
+print("HyperLogLog: ", count())
+print("Actual: ", comp.length)
